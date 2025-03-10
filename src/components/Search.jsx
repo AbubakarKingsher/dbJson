@@ -14,7 +14,7 @@ function Search() {
         let searchResult = e.target.value;
         const filtering = searchResult
             ? productData.filter(item =>
-                item.name.toLowerCase().includes(searchResult.toLowerCase())
+                item.title.toLowerCase().includes(searchResult.toLowerCase())
             )
             : [];
 
@@ -32,14 +32,14 @@ function Search() {
                 />
             </div>
             {filterdData.length === 0 ? null : (
-                <div className="scroll h-52 border-[#101828] border-2 p-2 sm:w-96 w-72 rounded-xl overflow-y-auto overflow-x-hidden">
+                <div className="scroll h-52 border-[#101828] border-2 p-2 sm:w-96 w-72 rounded-xl text-white overflow-y-auto overflow-x-hidden">
                     {filterdData.map((item, idx) => (
-                        <Link to={`productDetail/${item.id - 1}`} key={idx} className="h-32 w-full p-2 mb-2 rounded bg-fuchsia-200 flex gap-5 items-center">
-                            <img className="h-full rounded w-32 object-cover" src={item.image || "https://i.pinimg.com/236x/48/a5/a6/48a5a6e0c7b28378ff79397e07282d06.jpg"} />
+                        <Link to={`productDetail/${item.id - 1}`} key={idx} className="h-26 w-full p-2 mb-2 rounded-md bg-[#101828] flex gap-3 items-center">
+                            <img className="h-full w-20 rounded object-cover" src={item.image || "https://i.pinimg.com/236x/48/a5/a6/48a5a6e0c7b28378ff79397e07282d06.jpg"} />
                             <div>
-                                <h2 className="font-medium">{item.name}</h2>
-                                <h2 className="font-medium mb-5">{item.category}</h2>
-                                <h2 className="font-medium">{item.price} PKR</h2>
+                                <h2 className="font-medium">{item.title.length > 11 ? item.title.slice(0, 11) + "..." : item.title.slice(0, 11)}</h2>
+                                <h2 className="font-medium text-sm opacity-55 mb-3">{item.category}</h2>
+                                <h2 className="font-medium">${item.price}</h2>
                             </div>
                         </Link>
                     ))}

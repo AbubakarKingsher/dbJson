@@ -4,7 +4,7 @@ import { Context } from "../Context/ContextApi";
 function Filter() {
     const data = useContext(Context);
 
-    const { productData, setCategoryData } = data;
+    const { productData, setCategoryData, filterData } = data;
 
     const catrgoryHandler = (e) => {
         let categoryValue = e.target.value;
@@ -19,14 +19,17 @@ function Filter() {
     };
 
     return (
-        <div className="mt-11 mb-5 border-2 w-fit outline-none rounded">
-            <select onChange={catrgoryHandler}>
-                <option value="All">All</option>
-                <option value="Shoes">Shoes</option>
-                <option value="Clothing">Clothing</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Furniture">Furniture</option>
-                <option value="Accessories">Accessories</option>
+        <div className="flex items-center mb-7 gap-2">
+            <select
+                onChange={catrgoryHandler}
+                className="px-4 py-2 capitalize bg-gray-800 text-white rounded-lg shadow-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
+            >
+                {filterData.map((item, idx) => (
+                    <option className="capitalize" key={idx} value={item}>
+                        {item}
+                    </option>
+                ))}
+
             </select>
         </div>
     );

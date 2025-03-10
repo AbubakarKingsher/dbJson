@@ -7,7 +7,7 @@ import { Context } from "../Context/ContextApi";
 const ProductDetail = () => {
     const { id } = useParams();
     const data = useContext(Context);
-    const { productData, setCartData, cartData } = data;
+    const { productData, setCartData } = data;
 
     const productDetail = productData[Number(id)];
 
@@ -23,6 +23,7 @@ const ProductDetail = () => {
         );
     };
 
+
     return (
         productDetail && (
             <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white p-6">
@@ -36,7 +37,7 @@ const ProductDetail = () => {
                         <img
                             src={productDetail.image || "https://i.pinimg.com/236x/48/a5/a6/48a5a6e0c7b28378ff79397e07282d06.jpg"}
                             alt={productDetail.name}
-                            className="w-full rounded-lg shadow-lg sm:mt-0 mt-20"
+                            className="w-60 sm:ml-10 rounded-lg shadow-lg sm:mt-0 mt-20"
                         />
                     </motion.div>
 
@@ -46,8 +47,8 @@ const ProductDetail = () => {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
                     >
-                        <h1 className="text-4xl font-bold">{productDetail.name}</h1>
-                        <p className="text-lg text-gray-400">{productDetail.description}</p>
+                        <h1 className="text-4xl font-bold">{productDetail.title.length > 25 ? productDetail.title.slice(0, 25) + "..." : productDetail.title.slice(0, 25)}</h1>
+                        <p className="text-lg text-gray-400">{productDetail.description.length > 100 ? productDetail.description.slice(0, 100) + "..." : productDetail.description.slice(0, 100)}</p>
                         <p className="text-md text-gray-300 italic">
                             Category: {productDetail.category}
                         </p>
@@ -56,14 +57,14 @@ const ProductDetail = () => {
                             {[...Array(5)].map((_, index) => (
                                 <Star
                                     key={index}
-                                    fill={index < Math.round(productDetail.rating) ? "#facc15" : "none"}
+                                    fill={index < Math.round(productDetail.rating.rate) ? "#facc15" : "none"}
                                     stroke="#facc15"
                                 />
                             ))}
-                            <span className="text-gray-300">({productDetail.rating})</span>
+                            {<span className="text-gray-300">({productDetail.rating.count} reviews)</span>}
                         </div>
 
-                        <p className="text-2xl font-semibold">${productDetail.price}</p>
+                        <p className="text-2xl font-semibold">Price: ${productDetail.price}</p>
 
                         <motion.button
                             onClick={cartHandler}
